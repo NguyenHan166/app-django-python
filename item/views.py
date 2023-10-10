@@ -95,8 +95,12 @@ def cart(request):
 @login_required
 def addCart(request , pk):
     item = Item.objects.get(pk=pk)
+    print(request.user)
+    cart = Cart.objects.filter(user=request.user)
+    if not cart.exists():
+        c = Cart.objects.create(user = request.user)
+        c.save()
     cart = Cart.objects.filter(user=request.user)[0]
-    print(cart)
     cart.items.add(item)
     cart.save()
     return redirect('/')
