@@ -1,0 +1,37 @@
+{% extends "core/base.html" %}
+ 
+
+{% block title %}Log in{% endblock title %}
+
+{% block content %}
+    <div class = "w-1/2 my-6 p-6 mx-auto bg-gray-100 rounded-xl">
+        <h1 class="mb-6 text-3xl">Log in</h1>
+
+        <form method = "post" action =".">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="inline-block mb-2">Username</label> </br>
+                {{ form.username }}
+            </div>
+    
+            <div class="mb-3">
+                <label class="inline-block mb-2">Password</label> </br>
+                {{ form.password }}
+            </div>
+            
+
+            {% if form.errors or form.non_fields_errors  %}
+                <div class="mb-3 p-6 bg-red-100 rounded-xl">
+                    {% for field in form %}
+                        {{ field.errors }}
+                    {%endfor%}
+
+                    {{ form.non_fields_errors }}
+                </div>
+            {% endif %}
+
+            <button class="py-4 text-lg px-8 bg-teal-500 hover:bg-teal-700 text-white rounded-xl">Submit</button>
+        </form>
+    </div>
+{% endblock %}
