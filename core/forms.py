@@ -32,7 +32,8 @@ class SignupForm(UserCreationForm):
     
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Your password',
-        'class': 'w-full py-4 px-5 rounded-xl'
+        'class': 'w-full py-4 px-5 rounded-xl',
+        'name' : 'email,'
     }))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Repeat password',

@@ -14,18 +14,25 @@ def items(request):
     categories = Category.objects.all()
     items = Item.objects.filter(is_sold=False)
     category_id = request.GET.get('category' , 0)
+    sort_by = request.GET.get('sort_by','')
 
-    if category_id:
+    if category_id != 0:
         items = items.filter(category_id=category_id)
 
     if query:
         items = items.filter(Q(name__icontains=query) | Q(description__icontains=query))
 
+    if (sort_by == 'asc'):
+        items = sorted(items , key=lambda item: item.price)
+    else:
+        items = sorted(items, key=lambda item: item.price , reverse=True)
+
     return render(request, 'item/items.html', {
         'items': items,
         'query': query,
         'categories': categories,
-        'category_id': int(category_id)
+        'category_id': int(category_id),
+        'sort_by' :sort_by
     })
 
 def detail(request, pk):

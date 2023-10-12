@@ -12,18 +12,18 @@
 <body >
     <nav class="py-6 px-6 flex justify-between items-center border-b border-grey-200">
         <div class="grid grid-cols-2 gap-2 space-x-6 w-1/5">
-            <div class="px-3 py-3 bg-teal-500 text-center text-white rounded-xl"><a href="/" class="text-xl font-semibold">Puddle</a></div>
-            <p class="font-semibold text-center text-xl block">Hello {{ request.user.username }}</p>
+            <div><a href="/" class="px-3 py-3 bg-teal-500 text-center text-white rounded-xl d-block text-xl font-semibold">Puddle</a></div>
+            <p class="font-semibold text-center text-2xl block">Hello {{ request.user.username }}</p>
         </div>        
     
         <div class="space-x-6">
             <a href="{% url 'item:new' %}" class= "text-lg font-semibold hover:text-grey-500">New Item</a>
-            <a href="{% url 'item:items' %}" class= "text-lg font-semibold hover:text-grey-500">Browse</a>
+            <a href="{% url 'item:items' %}" class= "text-lg font-semibold hover:text-grey-500">Search</a>
         
             {% if request.user.is_authenticated %}
                 <a href="{% url 'item:cart' %}" class ="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
                 <a href="{% url 'conversation:inbox' %}" class ="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Inbox</a>
-                <a href="{% url 'dashboard:index' %}" class ="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Dashboard</a>
+                <a href="{% url 'dashboard:index' %}" class ="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">My Item</a>
                 <a href="{% url 'core:logout' %}" class ="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Logout</a>
             {% else %}
                 <a href="{% url 'core:signup' %}" class ="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign up</a>
@@ -39,7 +39,7 @@
     <footer class ="py-6 px-6 flex justify-between bg-gray-800">
         <div class ="w-2/3 pr-10">
             <h3 class="mb-5 font-semibold text-gray-400">About</h3>
-            <p class="text-lg text-gray-500">Lorem ipsum bla bla bla. Lorem ipsum bla bla bla. Lorem ipsum bla bla bla.</p>
+            <p class="text-lg text-gray-500">Wellcone to my website! We always service you all time!</p>
         </div>
 
         <div class="w-1/3">

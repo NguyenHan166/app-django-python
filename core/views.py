@@ -19,7 +19,10 @@ def index(request):
     })
 
 def contact(request):
-    return render(request, 'core/contact.html')
+    user = request.user
+    return render(request, 'core/contact.html' ,{
+        'user' : user,
+    })
 
 def signup(request):
     # khi da tao xong tk

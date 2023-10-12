@@ -31,12 +31,19 @@
         </div>
 
         <div class="col-span-3">
-            <div class="grid grid-cols-3 gap-3">
+            <div class="p-3 text-center">
+                <ul style="list-style-type: none;">
+                    <li class="d-inline-block text-2xl mr-2">Sort products by price: </li>
+                    <li class="d-inline-block"><a href="{% url 'item:items' %}?query={{ query }}&sort_by=asc" class="btn bg-teal-400 text-white px-5"><i class="fa-solid fa-up-long"></i></a></li>
+                    <li class="d-inline-block"><a href="{% url 'item:items' %}?query={{ query }}&sort_by=desc" class="btn bg-teal-400 text-white px-5"><i class="fa-solid fa-down-long"></i></a></li>
+                </ul>
+            </div>
+            <div class="grid grid-cols-4 gap-4">
                 {% for item in items %}
                     <div>
                         <a href="{% url 'item:detail' item.id %}">
                             <div>
-                                <img src='{{ item.image.url }}' class="rounded-t-xl">
+                                <img src='{{ item.image.url }}' class="rounded-t-xl" style="height: 200px; width: 100%;">
                             </div>
     
                             <div class="p-6 bg-white rounded-b-xl">
