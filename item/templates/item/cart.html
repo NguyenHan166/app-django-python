@@ -27,7 +27,7 @@
           <td>{{ item.name }}</td>
           <td>{{ item.price }}</td>
           <td class="text-center">
-            <a class="btn bg-teal-500 text-center text-white" href="{% url 'item:detail' item.id %}">View Detail</a>
+            <a class="btn bg-sky-500 text-center text-white" href="{% url 'item:detail' item.id %}">View Detail</a>
             <button data-item-id="{{ stt }}" class="delete-item btn btn-danger text-center text-white">Delete</button>
           </td>
         </tr>
@@ -36,17 +36,18 @@
         <th scope="row"></th>
         <td></td>
         <td style="padding: 15px; border-bottom-color: black;" class="text-danger d-block">Total Price:</td>
-		<td></td>
-        <td style="padding: 15px; border-bottom-color: black;" class="d-block">{{ total_price }}</td>
+        <td></td>
+        <td style="padding: 15px; border-bottom-color: black;" class="d-block" id="price">{{ total_price }}</td>
         <td class="text-center">
           <a class="btn bg-rose-500 text-white">Order Now</a>
         </td>
       </tr>
     </tbody>
-	<script>
+    <script>
 		$(document).ready(function () {
 		  $('.delete-item').on('click', function () {
 			var itemId = $(this).data('item-id')
+      {% comment %} var price = document.querySelector('#price') {% endcomment %}
 			var itemRow = $(this).closest('tr')
 			var url = '/items/' + itemId + '/removecart/' // Replace with your Django URL
 			$.ajax({
@@ -58,6 +59,7 @@
 			  dataType: 'json',
 			  success: function (response) {
 					itemRow.remove();
+          price.textContent = response.total_price.toString()
 			  },
 			  error: function (xhr, status, error) {
 				alert(error)

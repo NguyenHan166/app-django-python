@@ -2,6 +2,57 @@
 
 {% block title %}{{ item.name }}{%endblock%}
 
+{% block style %}
+
+<style>
+    #snackbar {
+        visibility: hidden;
+        min-width: 250px;
+        margin-left: -125px;
+        background-color: #198754;
+        color: #fff;
+        text-align: center;
+        border-radius: 2px;
+        padding: 16px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        bottom: 30px;
+        font-size: 17px;
+        border-radius: 20px;
+      }
+      
+      #snackbar.show {
+        visibility: visible;
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      }
+      
+      @-webkit-keyframes fadein {
+        from {bottom: 0; opacity: 0;} 
+        to {bottom: 30px; opacity: 1;}
+      }
+      
+      @keyframes fadein {
+        from {bottom: 0; opacity: 0;}
+        to {bottom: 30px; opacity: 1;}
+      }
+      
+      @-webkit-keyframes fadeout {
+        from {bottom: 30px; opacity: 1;} 
+        to {bottom: 0; opacity: 0;}
+      }
+      
+      @keyframes fadeout {
+        from {bottom: 30px; opacity: 1;}
+        to {bottom: 0; opacity: 0;}
+      }
+</style>
+
+{% endblock style %}
+
+
+
 {% block content %}
 <div class="grid grid-cols-5 gap-6">
     <div class="col-span-3">
@@ -25,18 +76,48 @@
                 <p>This is your item!</p>
 
                 <a href="{% url 'item:edit' item.id %}" 
-                    class="inline-block mt-6 py-3 px-6 text-lg font-semibold bg-teal-500 text-white rounded-xl">Edit
+                    class="inline-block mt-6 py-3 px-6 text-lg font-semibold bg-sky-500 text-white rounded-xl">Edit
                 </a>
                 <a href="{% url 'item:delete' item.id %}" 
                     class="inline-block mt-6 py-3 px-6 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete
                 </a>
             </div>
         {%else%}
-            <a href="{% url 'conversation:new' item.id %}" class ="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Contact Seller</a>
+            <a href="#" class ="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-rose-500 text-white rounded-xl hover:bg-rose-600">Buy</a>
+            {% csrf_token %}
+            <button data-item-id ="{{ item.id }}" class ="add-to-cart inline-block mt-6 px-6 py-3 text-lg font-semibold bg-sky-500 text-white rounded-xl hover:bg-sky-600">Add To Cart</button>
+            <div id="snackbar" class="bg-sky-500">Add to cart successfully!</div>
+            <a href="{% url 'conversation:new' item.id %}" class ="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-sky-500 text-white rounded-xl hover:bg-sky-600">Contact Seller</a>
         {%endif%}
 
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+      $('.add-to-cart').on('click', function(event) {
+        event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ a
+        var itemId = $(this).data('item-id');
+        var button = $(this)
+        var url = '/items/' + itemId + '/addCart/';
+        // Thực hiện yêu cầu AJAX
+        $.ajax({
+          url: url,
+          method: 'POST',
+          data: {
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function(response) {
+            var x = document.getElementById("snackbar");
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2000);
+          },
+          error: function() {
+            alert('Có lỗi xảy ra');
+          }
+        });
+      });
+    });
+  </script>
 
 <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
     <h2 class='mb-12 text-2xl text-center'>Related items</h2>

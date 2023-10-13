@@ -8,11 +8,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title> {% block title%}{%endblock%} | Puddle</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    {% block style %}{% endblock style %}
 </head>
 <body >
-    <nav class="py-6 px-6 flex justify-between items-center border-b border-grey-200">
+    <nav class="py-6 px-6 flex bg-gray-100 justify-between items-center border-b border-grey-200">
         <div class="grid grid-cols-2 gap-2 space-x-6 w-1/5">
-            <div><a href="/" class="px-3 py-3 bg-teal-500 text-center text-white rounded-xl d-block text-xl font-semibold">Puddle</a></div>
+            <div><a href="/" class="px-3 py-3 bg-sky-500 text-center text-white rounded-xl d-block text-xl font-semibold">Puddle</a></div>
             <p class="font-semibold text-center text-2xl block">Hello {{ request.user.username }}</p>
         </div>        
     
@@ -21,12 +23,12 @@
             <a href="{% url 'item:items' %}" class= "text-lg font-semibold hover:text-grey-500">Search</a>
         
             {% if request.user.is_authenticated %}
-                <a href="{% url 'item:cart' %}" class ="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
-                <a href="{% url 'conversation:inbox' %}" class ="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Inbox</a>
-                <a href="{% url 'dashboard:index' %}" class ="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">My Item</a>
-                <a href="{% url 'core:logout' %}" class ="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Logout</a>
+                <a href="{% url 'item:cart' %}" class ="px-6 py-3 text-lg font-semibold bg-sky-500 text-white rounded-xl hover:bg-sky-700"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
+                <a href="{% url 'conversation:inbox' %}" class ="px-6 py-3 text-lg font-semibold bg-sky-500 text-white rounded-xl hover:bg-sky-700">Inbox</a>
+                <a href="{% url 'dashboard:index' %}" class ="px-6 py-3 text-lg font-semibold bg-sky-500 text-white rounded-xl hover:bg-sky-700">My Item</a>
+                <a href="{% url 'core:logout' %}" class ="px-6 py-3 text-lg font-semibold bg-rose-400 text-white rounded-xl hover:bg-rose-500">Logout</a>
             {% else %}
-                <a href="{% url 'core:signup' %}" class ="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign up</a>
+                <a href="{% url 'core:signup' %}" class ="px-6 py-3 text-lg font-semibold bg-sky-500 text-white rounded-xl hover:bg-sky-700">Sign up</a>
                 <a href="{% url 'core:login' %}" class ="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Log in</a>
             {%endif%}
         </div>
@@ -36,20 +38,20 @@
         {% endblock %}
     </div>
     
-    <footer class ="py-6 px-6 flex justify-between bg-gray-800">
+    <footer class ="py-6 px-6 flex justify-between bg-gray-700">
         <div class ="w-2/3 pr-10">
-            <h3 class="mb-5 font-semibold text-gray-400">About</h3>
-            <p class="text-lg text-gray-500">Wellcone to my website! We always service you all time!</p>
+            <h3 class="mb-5 font-semibold text-gray-400 text-center text-xl">About</h3>
+            <p class="text-lg text-gray-500 text-center">Wellcone to my website! We always service you all time!</p>
         </div>
 
         <div class="w-1/3">
-            <h3 class="mb-5 font-semibold text-gray-400">Menu</h3>
+            <h3 class="mb-5 font-semibold text-gray-400 text-xl text-center">Menu</h3>
 
             <ul class="space-y-2">
-                <li><a href="#" class="text-lg text-teal-500 hover:text-teal-700">About</a></li>
-                <li><a href="{% url 'core:contact' %}" class="text-lg text-teal-500 hover:text-teal-700">Contact</a></li>
-                <li><a href="#" class="text-lg text-teal-500 hover:text-teal-700">Privacy policy</a></li>
-                <li><a href="#" class="text-lg text-teal-500 hover:text-teal-700">Term of use</a></li>
+                <li class="d-inline-block"><a href="#" class="text-lg text-teal-500 p-3 hover:text-teal-700">About</a></li>
+                <li class="d-inline-block"><a href="{% url 'core:contact' %}" class="text-lg p-3 text-teal-500 hover:text-teal-700">Contact</a></li>
+                <li class="d-inline-block"><a href="#" class="text-lg text-teal-500  p-3 hover:text-teal-700">Privacy policy</a></li>
+                <li class="d-inline-block"><a href="#" class="text-lg text-teal-500  p-3 hover:text-teal-700">Term of use</a></li>
             </ul>
         </div>
     </footer>

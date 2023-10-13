@@ -8,7 +8,7 @@
             <form method = "get" action="{% url 'item:items' %}">
                 <input name="query" class="w-full py-4 px-6 rounded-xl border" type ="text" value ="{{query}}" placeholder="Find something">
 
-                <button class="mt-2 py-4 px-8 text-lg bg-teal-500 text-white rounded-xl">Search</button>
+                <button class="mt-2 py-4 px-8 text-lg bg-sky-500 text-white rounded-xl">Search</button>
             </form>
 
             <hr calss="my-6">
@@ -31,11 +31,22 @@
         </div>
 
         <div class="col-span-3">
-            <div class="p-3 text-center">
+            <div class="p-3 ">
                 <ul style="list-style-type: none;">
-                    <li class="d-inline-block text-2xl mr-2">Sort products by price: </li>
-                    <li class="d-inline-block"><a href="{% url 'item:items' %}?query={{ query }}&sort_by=asc" class="btn bg-teal-400 text-white px-5"><i class="fa-solid fa-up-long"></i></a></li>
-                    <li class="d-inline-block"><a href="{% url 'item:items' %}?query={{ query }}&sort_by=desc" class="btn bg-teal-400 text-white px-5"><i class="fa-solid fa-down-long"></i></a></li>
+                    <li class="d-inline-block">
+                        <p class="d-inline-block text-2xl mr-2">Sort by price: </p>
+                        <div class="d-inline-block"><a href="{% url 'item:items' %}?query={{ query }}&sort_by=asc&from_price={{from_price}}&to_price={{to_price}}" class="btn bg-sky-400 text-white px-5"><i class="fa-solid fa-up-long"></i></a></div>
+                        <div class="d-inline-block"><a href="{% url 'item:items' %}?query={{ query }}&sort_by=desc&from_price={{from_price}}&to_price={{to_price}}" class="btn bg-sky-400 text-white px-5"><i class="fa-solid fa-down-long"></i></a></div>
+                    </li>
+                    <li class="d-inline-block">
+                        <form action="">
+                            <label class="d-inline-block text-2xl mr-2">From: </label>
+                            <li class="d-inline-block"><input class="d-block p-1 rounded-xl" type="number" name="from_price" id=""></li>
+                            <label class="d-inline-block text-2xl mr-2">To: </label>
+                            <li class="d-inline-block"><input class="d-block p-1 rounded-xl" type="number" name="to_price" id=""></li>
+                            <button class="btn bg-sky-400 text-white" type="submit">Search</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
             <div class="grid grid-cols-4 gap-4">
