@@ -45,3 +45,4 @@ class EditItemForm(forms.ModelForm):
                 'class': INPUT_CLASSES
             }),
         }
+

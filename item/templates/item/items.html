@@ -17,7 +17,7 @@
             <ul>
                 {% for category in categories %}
                     <li class="py-2 px-2 rounded-xl{% if category.id == category_id %} bg-gray-200{% endif %}">
-                        <a href="{% url 'item:items' %}?query={{ query }}&category={{ category.id }}">{{ category.name }}</a>
+                        <a href="{% url 'item:items' %}?query={{ query }}&category={{ category.id }}&from_price={{from_price}}&to_price={{to_price}}">{{ category.name }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -35,21 +35,24 @@
                 <ul style="list-style-type: none;">
                     <li class="d-inline-block">
                         <p class="d-inline-block text-2xl mr-2">Sort by price: </p>
-                        <div class="d-inline-block"><a href="{% url 'item:items' %}?query={{ query }}&sort_by=asc&from_price={{from_price}}&to_price={{to_price}}" class="btn bg-sky-400 text-white px-5"><i class="fa-solid fa-up-long"></i></a></div>
-                        <div class="d-inline-block"><a href="{% url 'item:items' %}?query={{ query }}&sort_by=desc&from_price={{from_price}}&to_price={{to_price}}" class="btn bg-sky-400 text-white px-5"><i class="fa-solid fa-down-long"></i></a></div>
+                        <div class="d-inline-block"><a href="{% url 'item:items' %}?query={{ query }}&sort_by=asc&from_price={{from_price}}&to_price={{to_price}}&category={{category_id}}" class="btn bg-sky-400 text-white px-5"><i class="fa-solid fa-up-long"></i></a></div>
+                        <div class="d-inline-block"><a href="{% url 'item:items' %}?query={{ query }}&sort_by=desc&from_price={{from_price}}&to_price={{to_price}}&category={{category_id}}" class="btn bg-sky-400 text-white px-5"><i class="fa-solid fa-down-long"></i></a></div>
                     </li>
                     <li class="d-inline-block">
-                        <form action="">
+                        <form id="search-form" action="">
                             <label class="d-inline-block text-2xl mr-2">From: </label>
-                            <li class="d-inline-block"><input class="d-block p-1 rounded-xl" type="number" name="from_price" id=""></li>
+                            <div class="d-inline-block"><input class="d-block p-1 rounded-xl" type="number" name="from_price" id="from_price"></div>
                             <label class="d-inline-block text-2xl mr-2">To: </label>
-                            <li class="d-inline-block"><input class="d-block p-1 rounded-xl" type="number" name="to_price" id=""></li>
-                            <button class="btn bg-sky-400 text-white" type="submit">Search</button>
+                            <div class="d-inline-block"><input class="d-block p-1 rounded-xl" type="number" name="to_price" id="to_price"></div>
+                            <input type="hidden" name="query" value="{{query}}">
+                            <input type="hidden" name = "sort_by" value="{{sort_by}}">
+                            <input type="hidden" name = "category" value="{{ category_id }}">
+                            <button type="submit" class="btn bg-sky-400 text-white">Search</button>
                         </form>
                     </li>
                 </ul>
             </div>
-            <div class="grid grid-cols-4 gap-4">
+            <div class="grid grid-cols-4 gap-4" id="content">
                 {% for item in items %}
                     <div>
                         <a href="{% url 'item:detail' item.id %}">

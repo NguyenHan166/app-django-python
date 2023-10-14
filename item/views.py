@@ -25,11 +25,13 @@ def items(request):
 
     if category_id != 0:
         items = items.filter(category_id=category_id)
+        items = items.filter(price__gte=from_price , price__lte=to_price , category_id=category_id)
+    else:
+        items = items.filter(price__gte=from_price , price__lte=to_price)
 
     if query:
         items = items.filter(Q(name__icontains=query) | Q(description__icontains=query))
     
-    items = items.filter(price__gte=from_price , price__lte=to_price)
 
     if (sort_by == 'asc'):
         items = sorted(items , key=lambda item: item.price)
@@ -82,22 +84,6 @@ def delete(request , pk):
 
     return redirect('dashboard:index')
 
-@login_required
-def edit(request , pk):
-    item = get_object_or_404(Item, pk=pk , created_by=request.user)
-    if request.method == 'POST':
-        form = EditItemForm(request.POST , request.FILES , instance=item)
-        if form.is_valid():
-            form.save()
-
-            return redirect('item:detail' ,pk=item.id)
-    else:
-        form = EditItemForm(instance=item)
-
-    return render(request, 'item/form.html' , {
-        'form' : form,
-        'title': 'Edit Item',
-    })
 
 @login_required
 def cart(request):
@@ -145,3 +131,20 @@ def removecart(request,pk):
         })
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
+
+@login_required
+def edit(request , pk):
+    item = get_object_or_404(Item, pk=pk , created_by=request.user)
+    if request.method == 'POST':
+        form = EditItemForm(request.POST , request.FILES , instance=item)
+        if form.is_valid():
+            form.save()
+
+            return redirect('item:detail' ,pk=item.id)
+    else:
+        form = EditItemForm(instance=item)
+
+    return render(request, 'item/form.html' , {
+        'form' : form,
+        'title': 'Edit Item',
+    })
