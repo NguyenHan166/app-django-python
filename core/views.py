@@ -7,7 +7,7 @@ from item.models import Item, Category,Cart
 from .forms import SignupForm
 
 def index(request):
-    items = Item.objects.filter(is_sold=False)[0:6]
+    items = Item.objects.filter(is_sold=False)
     categories = Category.objects.all()
     cart = Cart.objects.all()
     if not cart.exists() and request.user.is_authenticated:
