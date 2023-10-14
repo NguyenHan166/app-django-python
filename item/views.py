@@ -66,6 +66,7 @@ def new(request):
         if form.is_valid():
             item = form.save(commit=False)
             item.created_by = request.user
+            item.is_sold = False
             item.save()
 
             return redirect('item:detail' ,pk=item.id)
