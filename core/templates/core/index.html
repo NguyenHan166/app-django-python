@@ -68,7 +68,7 @@
                         </div>
                             {% if item.created_by != request.user %}
                             {% csrf_token %}
-                                <button data-item-id="{{ item.id }}" class="btn text-center text-2xl text-white bg-rose-500 rounded-b-xl block w-full p-2 hover:bg-sky-600 add-to-cart"><i class="fa-solid fa-cart-plus"></i> Add To Cart</button>
+                                <button data-item-id="{{ item.id }}" class="btn text-center text-2xl text-white bg-sky-500 rounded-b-xl block w-full p-2 hover:bg-sky-600 add-to-cart"><i class="fa-solid fa-cart-plus"></i> Add To Cart</button>
                                 <div id="snackbar" class="bg-sky-500">Add to cart successfully!</div>
                             {% endif %}
                             {% if item.created_by == request.user %}
