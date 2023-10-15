@@ -1,0 +1,60 @@
+{% extends "core/base.html" %}
+ 
+
+{% block title %}Check out{% endblock title %}
+
+{% block content %}
+    <div class="grid grid-cols-2 gap-2">
+        <div class = " my-6 p-6  bg-gray-100 rounded-xl">
+            <h1 class="mb-6 text-3xl">Your order</h1>
+    
+            <form method = "post" action =".">
+                {% csrf_token %}
+    
+                <div class="mb-3">
+                    <label class="inline-block mb-2">Your name:</label> </br>
+                    <input type="text" value="{{ user.username }}" readonly="readonly" name="" id="" class="w-full rounded-xl p-2">
+                </div>
+    
+                <div class="mb-3">
+                    <label class="inline-block mb-2">Your Email</label> </br>
+                    <input type="text" value="{{ user.email }}" readonly="readonly" name="" id="" class="w-full p-2 rounded-xl">
+                </div>
+    
+                {{ form.as_p }}
+    
+                {% if form.errors or form.non_fields_errors  %}
+                    <div class="mb-3 p-6 bg-red-100 rounded-xl">
+                        {% for field in form %}
+                            {{ field.errors }}
+                        {%endfor%}
+    
+                        {{ form.non_fields_errors }}
+                    </div>
+                {% endif %}
+    
+                <button class="py-4 text-lg px-8 bg-sky-500 hover:bg-sky-700 text-white rounded-xl mt-2 w-full text-center">Send</button>
+            </form>
+        </div>
+
+        <div class = "my-6 p-6 bg-gray-100 rounded-xl">
+            <h1 class="mb-6 text-3xl text-center">Item</h1>
+    
+            <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
+                <div class="p-2 bg-white rounded-xl text-center">
+                    <img src="{{ item.image.url }}" alt="" style="height: 250px;">
+                </div>
+                <h1 class="mb-6 text-3xl my-2">{{ item.name }}</h1>
+                <p class="text-gray-500 text-2xl my-2"><strong>Price:</strong> {{ item.price }}</p>
+                <p class="text-gray-500 text-2xl my-2"><strong>Seller:</strong> {{ item.created_by.username}}</p>
+                
+                {% if item.description %}
+                <p class="text-gray-700 text-2xl my-2">
+                    <strong class="text-gray-500">Description:</strong><br>
+                    {{ item.description}}
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

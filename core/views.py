@@ -2,20 +2,24 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
 
-from item.models import Item, Category,Cart
+from item.models import Item, Category,Cart,Orders
 # Create your views here.
 from .forms import SignupForm
+from profiles.models import UserProfile
 
 def index(request):
     items = Item.objects.filter(is_sold=False)
+    items = sorted(items , key= lambda x: x.created_at , reverse=True)
     categories = Category.objects.all()
     cart = Cart.objects.all()
     if not cart.exists() and request.user.is_authenticated:
         cart = Cart.objects.create(user = request.user)
         cart.save()
+    session_value = request.session.pop('messageBuy', None)  # Lấy giá trị của session và xóa nó
     return render(request, 'core/index.html',{
         'categories' : categories,
         'items' : items,
+        'session_value' : session_value
     })
 
 def contact(request):

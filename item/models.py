@@ -30,3 +30,16 @@ class Item(models.Model):
 class Cart(models.Model):
     items = models.ManyToManyField(Item)
     user = models.ForeignKey(User , related_name='cart' , blank=True, on_delete=models.CASCADE)
+
+class Orders(models.Model):
+    item = models.ForeignKey(Item , related_name='items', on_delete=models.CASCADE)
+    seller = models.ForeignKey(User , related_name='seller' , on_delete=models.CASCADE)
+    buyer = models.ForeignKey(User , related_name='buyer' , on_delete=models.CASCADE)
+    phonenumber = models.CharField(max_length=50 , default='')
+    address = models.CharField(max_length=1000 , default='')
+    payment = models.CharField(max_length=50,default='cash')
+
+    class Meta:
+        ordering = ('buyer',)
+    def __str__(self):
+        return 'Order of ' + self.buyer.username

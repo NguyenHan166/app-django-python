@@ -5,8 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views.decorators.cache import never_cache
 
-from .models import Category, Item , Cart
-from .forms import EditItemForm, NewItemForm
+from profiles.models import UserProfile
+from .models import Category, Item , Cart ,Orders
+from .forms import EditItemForm, NewItemForm , OrdersForm
 # Create your views here.
 
 # search
@@ -52,7 +53,7 @@ def items(request):
 
 def detail(request, pk):
     item = get_object_or_404(Item, pk=pk)
-    related_items = Item.objects.filter(category=item.category , is_sold = False).exclude(pk=pk)[0:3]
+    related_items = Item.objects.filter(category=item.category , is_sold = False).exclude(pk=pk)
 
     return render(request , 'item/detail.html', {
         'item' : item,
@@ -148,4 +149,37 @@ def edit(request , pk):
     return render(request, 'item/form.html' , {
         'form' : form,
         'title': 'Edit Item',
+    })
+
+@login_required
+def buy(request, pk):
+    item = Item.objects.get(pk=pk)
+    user = request.user
+    try:
+        profile = UserProfile.objects.get(user=user)
+    except UserProfile.DoesNotExist:
+        profile = UserProfile(user=user)
+
+    if request.method == 'POST':
+        form = OrdersForm(request.POST)
+        if form.is_valid():
+            orders = form.save(commit=False)
+            orders.buyer = user
+            orders.seller = item.created_by
+            orders.item = item
+            orders.save()
+            profile.orders = orders
+            profile.save()
+            messageBuy = 'Your request has been sent to the seller'
+            request.session['messageBuy'] = messageBuy
+            return redirect('/', extra={
+                'messageBuy': messageBuy
+            })
+    else:
+        form = OrdersForm()
+
+    return render(request, 'item/order.html', {
+        'form': form,
+        'user': user,
+        'item': item,
     })

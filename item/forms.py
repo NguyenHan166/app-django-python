@@ -1,5 +1,5 @@
 from django import forms
-from .models import Item
+from .models import Item , Orders
 
 INPUT_CLASSES = 'w-full py-4 px-6 rounded-xl border'
 
@@ -46,3 +46,26 @@ class EditItemForm(forms.ModelForm):
             }),
         }
 
+class OrdersForm(forms.ModelForm):
+    PAYMENT_CHOICES = (
+        ('Cash', 'Cash'),
+        ('Bank Payment', 'Bank Payment'),
+    )
+
+    payment = forms.ChoiceField(choices=PAYMENT_CHOICES, widget=forms.Select(attrs={'class': INPUT_CLASSES}))
+
+    class Meta:
+        model = Orders
+        fields = ('phonenumber', 'address' ,'payment')
+        widgets = {
+            'phonenumber': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'address': forms.Textarea(attrs={
+                'class': INPUT_CLASSES
+            }),
+        }
+    def __init__(self, *args, **kwargs):
+        super(OrdersForm, self).__init__(*args, **kwargs)
+        if self.instance:
+            self.fields['payment'].initial = self.instance.payment
