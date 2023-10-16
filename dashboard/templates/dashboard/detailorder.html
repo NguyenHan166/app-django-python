@@ -1,0 +1,60 @@
+{% extends "core/base.html" %}
+ 
+
+{% block title %}{% endblock title %}
+
+{% block content %}
+    <div class="grid grid-cols-2 gap-2">
+        <div class = " my-6 p-6  bg-gray-100 rounded-xl">
+            <h1 class="mb-6 text-3xl">Order</h1>
+    
+            <div>
+                {% csrf_token %}
+    
+                <div class="mb-3">
+                    <label class="inline-block mb-2">Client name:</label> </br>
+                    <input type="text" value="{{ order.buyer.username }}" readonly="readonly" name="" id="" class="w-full rounded-xl p-2">
+                </div>
+    
+                <div class="mb-3">
+                    <label class="inline-block mb-2">Client Email</label> </br>
+                    <input type="text" value="{{ order.buyer.email }}" readonly="readonly" name="" id="" class="w-full p-2 rounded-xl">
+                </div>
+
+                <div class="mb-3">
+                    <label class="inline-block mb-2">Client Phone Number</label> </br>
+                    <input type="text" value="{{ order.phonenumber }}" readonly="readonly" name="" id="" class="w-full p-2 rounded-xl">
+                </div>
+
+                <div class="mb-3">
+                    <label class="inline-block mb-2">Client Address</label> </br>
+                    <input type="text" value="{{ order.address }}" readonly="readonly" name="" id="" class="w-full p-2 rounded-xl">
+                </div>
+    
+                <div class="w-full mt-2">
+                    <a href="{% url 'conversation:new' item.id %}" class ="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-sky-500 text-white rounded-xl hover:bg-sky-600">Contact Buyer</a>
+                </div>
+            </div>
+        </div>
+
+        <div class = "my-6 p-6 bg-gray-100 rounded-xl">
+            <h1 class="mb-6 text-3xl text-center">Item</h1>
+    
+            <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
+                <div class="p-2 bg-white rounded-xl text-center">
+                    <img src="{{ item.image.url }}" alt="" style="height: 250px;">
+                </div>
+                <h1 class="mb-6 text-3xl my-2">{{ item.name }}</h1>
+                <p class="text-gray-500 text-2xl my-2"><strong>Price:</strong> {{ item.price }}</p>
+                <p class="text-gray-500 text-2xl my-2"><strong>Seller:</strong> {{ item.created_by.username}}</p>
+                
+                {% if item.description %}
+                <p class="text-gray-700 text-2xl my-2">
+                    <strong class="text-gray-500">Description:</strong><br>
+                    {{ item.description}}
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

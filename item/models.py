@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -38,6 +39,7 @@ class Orders(models.Model):
     phonenumber = models.CharField(max_length=50 , default='')
     address = models.CharField(max_length=1000 , default='')
     payment = models.CharField(max_length=50,default='cash')
+    time_order = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ('buyer',)

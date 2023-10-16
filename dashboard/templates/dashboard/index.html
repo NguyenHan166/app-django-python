@@ -6,7 +6,7 @@
     <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
         <h2 class='mb-12 text-2xl text-center'>My items</h2>
         
-        <div class="grid grid-cols-3 gap-3">
+        <div class="grid grid-cols-4 gap-4">
             {% for item in items %}
                 <div class="">
                     <a href="{% url 'item:detail' item.id %}">
@@ -17,12 +17,32 @@
                         <div class="p-6 bg-white rounded-b-xl">
                             <h2 class="text-2xl">{{ item.name }}</h2>
                             <p class="text-gray-500">Price: {{ item.price }}</p>
-                            {% if item.id == orders.item.id %}
-                                <h5 class="text-rose-500">You have a request, <a href="" class="btn bg-rose-500 hover:bg-rose-600 text-white">DETAIL HERE</a></h5>
-                            {% endif %}
-                            {% if item.id != orders.item.id %}
+                            {% if item in itemsOrder %}
+                                <h5 class="text-rose-500">You have a request, <a href="{% url 'dashboard:detailOrder' item.id %}" class="btn bg-rose-500 hover:bg-rose-600 text-white">DETAIL HERE</a></h5>
+                            {% else %}
                                 <h3 class="text-rose-500">No request</h3>
                             {% endif %}
+                        </div>
+                    </a>
+                </div>
+            {%endfor%}
+        </div>
+    </div>
+
+    <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+        <h2 class='mb-12 text-2xl text-center'>My orders</h2>
+        
+        <div class="grid grid-cols-4 gap-4">
+            {% for item in myorders_items %}
+                <div class="">
+                    <a href="{% url 'item:detail' item.id %}">
+                        <div>
+                            <img style="width: 100%; height: 250px;" src='{{ item.image.url }}' class="rounded-t-xl">
+                        </div>
+
+                        <div class="p-6 bg-white rounded-b-xl">
+                            <h2 class="text-2xl">{{ item.name }}</h2>
+                            <p class="text-gray-500">Price: {{ item.price }}</p>
                         </div>
                     </a>
                 </div>
