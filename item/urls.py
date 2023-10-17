@@ -14,6 +14,8 @@ urlpatterns = [
     path('<int:pk>/edit/' , views.edit , name = 'edit'),
     path('' , views.items , name = 'items'),
     path('<int:pk>/buy/' , views.buy , name = 'buy'),
-    
+    path('<int:pk>/newfeedback/' , views.newFeedback , name = 'newfeedback'),
+    path('<int:pk>/feedback/' , views.allFeedback , name = 'feedback'),
+
 ]
 

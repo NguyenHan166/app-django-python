@@ -68,14 +68,18 @@
                         <div class="p-6 bg-white">
                             <h2 class="text-2xl">{{ item.name }}</h2>
                             <p class="text-gray-500">Price: {{ item.price }}</p>
+                            <p class="text-gray-500">Products available: {{ item.remaining_quantity }}</p>
                         </div>
                             {% if item.created_by != request.user %}
                             {% csrf_token %}
-                                <button data-item-id="{{ item.id }}" class="btn text-center text-2xl text-white bg-sky-500 rounded-b-xl block w-full p-2 hover:bg-sky-600 add-to-cart"><i class="fa-solid fa-cart-plus"></i> Add To Cart</button>
+                                <div class="flex rounded-b-xl">
+                                  <a href="{% url 'item:buy' item.id %}" class ="btn text-center text-xl text-white bg-rose-500 w-1/2 p-2 hover:bg-rose-600 add-to-cart">Buy</a>
+                                  <button data-item-id="{{ item.id }}" class="btn text-center text-xl text-white bg-sky-500 p-2 w-1/2 hover:bg-sky-600 add-to-cart"><i class="fa-solid fa-cart-plus"></i> Add To Cart</button>
+                                </div>
                                 <div id="snackbar" class="bg-sky-500">Add to cart successfully!</div>
                             {% endif %}
                             {% if item.created_by == request.user %}
-                                <a href="{% url 'item:edit' item.id %}" class="btn text-center text-2xl text-white bg-sky-500 rounded-b-xl block w-full p-2 hover:bg-sky-600 add-to-cart"><i class="fa-solid fa-pen"></i> Edit</a>
+                                <a href="{% url 'item:edit' item.id %}" class="btn text-center text-xl text-white bg-sky-500 rounded-b-xl block w-full p-2 hover:bg-sky-600 add-to-cart"><i class="fa-solid fa-pen"></i> Edit</a>
                             {% endif %}
                         </div>
                     </a>

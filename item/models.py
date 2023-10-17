@@ -24,6 +24,7 @@ class Item(models.Model):
     # Biểu thị quan hệ giũa User và item , mỗi khi xóa 1 user thì sẽ xóa các item liên quan đến user đó
     created_by = models.ForeignKey(User , related_name='items',on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    remaining_quantity = models.IntegerField(default=1)
 
     def __str__(self):
         return self.name
@@ -40,8 +41,20 @@ class Orders(models.Model):
     address = models.CharField(max_length=1000 , default='')
     payment = models.CharField(max_length=50,default='cash')
     time_order = models.DateTimeField(auto_now_add=True)
+    quantity = models.IntegerField(default=1)
 
     class Meta:
         ordering = ('buyer',)
     def __str__(self):
         return 'Order of ' + self.buyer.username
+    
+class Feedback(models.Model):
+    content = models.CharField(max_length=10000000 , default='')
+    item = models.ForeignKey(Item, related_name='feedback' , on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='feedback',on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('created_at',)
+    def __str__(self):
+        return 'Feedback from '+ self.user.username + ' to ' + self.item.name

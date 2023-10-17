@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.cache import never_cache
 
 from profiles.models import UserProfile
-from .models import Category, Item , Cart ,Orders
+from .models import Category, Item , Cart ,Orders , Feedback
 from .forms import EditItemForm, NewItemForm , OrdersForm
 # Create your views here.
 
@@ -103,7 +103,6 @@ def cart(request):
 @login_required
 def addCart(request , pk):
     item = Item.objects.get(pk=pk)
-    page = request.GET.get('page' ,'')
     print(request.user)
     cart = Cart.objects.filter(user=request.user)
     if not cart.exists():
@@ -112,8 +111,6 @@ def addCart(request , pk):
     cart = Cart.objects.filter(user=request.user)[0]
     cart.items.add(item)
     cart.save()
-    if page != '':
-        return redirect("/items/" + str(pk))
     return redirect('/')
 
 @login_required
@@ -182,4 +179,26 @@ def buy(request, pk):
         'form': form,
         'user': user,
         'item': item,
+    })
+
+# feedback
+
+def newFeedback(request , pk):
+    item = Item.objects.get(pk=pk)
+    feedback_content = request.GET.get('feedback_content')
+    # feedback = Feedback.objects.create(user=request.user , item=item,con)
+    feedback = Feedback.objects.create(user=request.user , item=item,content=feedback_content)
+    feedback.save()
+    return redirect('item:feedback', pk=pk)
+
+def allFeedback(request,pk):
+    item = Item.objects.get(pk=pk)
+    feedbacks = list(Feedback.objects.filter(item=item))
+
+    if len(feedbacks) != 0:
+        feedbacks = sorted(feedbacks, key=lambda x : x.created_at , reverse=True)
+
+    return render(request, 'item/feedback.html' , {
+        'item' : item,
+        'feedbacks' : feedbacks
     })

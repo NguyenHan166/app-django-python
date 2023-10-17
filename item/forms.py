@@ -7,7 +7,7 @@ INPUT_CLASSES = 'w-full py-4 px-6 rounded-xl border'
 class NewItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ('category', 'name', 'description', 'price', 'image')
+        fields = ('category', 'name', 'description', 'remaining_quantity' ,'price', 'image')
         widgets = {
             'category': forms.Select(attrs={
                 'class': INPUT_CLASSES
@@ -16,6 +16,9 @@ class NewItemForm(forms.ModelForm):
                 'class': INPUT_CLASSES
             }),
             'description': forms.Textarea(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'remaining_quantity' : forms.NumberInput(attrs={
                 'class': INPUT_CLASSES
             }),
             'price': forms.TextInput(attrs={
@@ -30,12 +33,15 @@ class NewItemForm(forms.ModelForm):
 class EditItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ('name', 'description', 'price', 'image', 'is_sold')
+        fields = ('name', 'description','remaining_quantity', 'price', 'image', 'is_sold')
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': INPUT_CLASSES
             }),
             'description': forms.Textarea(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'remaining_quantity' : forms.NumberInput(attrs={
                 'class': INPUT_CLASSES
             }),
             'price': forms.TextInput(attrs={
@@ -56,12 +62,15 @@ class OrdersForm(forms.ModelForm):
 
     class Meta:
         model = Orders
-        fields = ('phonenumber', 'address' ,'payment')
+        fields = ('phonenumber', 'address' ,'quantity','payment')
         widgets = {
             'phonenumber': forms.TextInput(attrs={
                 'class': INPUT_CLASSES
             }),
             'address': forms.Textarea(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'quantity': forms.NumberInput(attrs={
                 'class': INPUT_CLASSES
             }),
         }
