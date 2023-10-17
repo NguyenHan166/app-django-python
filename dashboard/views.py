@@ -23,7 +23,7 @@ def index(request):
         'myorders_items': myorders_items,
         'myorders_times': myorders_times,
     })
-
+@login_required
 def detailOrder(request,pk):
     item = Item.objects.get(pk=pk)
     order = Orders.objects.filter(seller=request.user , item=item)[0]

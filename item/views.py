@@ -183,6 +183,7 @@ def buy(request, pk):
 
 # feedback
 
+@login_required
 def newFeedback(request , pk):
     item = Item.objects.get(pk=pk)
     feedback_content = request.GET.get('feedback_content')
@@ -191,6 +192,7 @@ def newFeedback(request , pk):
     feedback.save()
     return redirect('item:feedback', pk=pk)
 
+@login_required
 def allFeedback(request,pk):
     item = Item.objects.get(pk=pk)
     feedbacks = list(Feedback.objects.filter(item=item))
