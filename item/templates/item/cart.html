@@ -12,7 +12,7 @@
         <th scope="col">Name</th>
         <th scope="col">Category</th>
         <th scope="col">Price</th>
-        <th scope="col">Action</th>
+        <th scope="col" class="text-center">Action</th>
       </tr>
     </thead>
     <tbody id="tbody">
@@ -27,6 +27,7 @@
           <td>{{ item.name }}</td>
           <td>{{ item.price }}</td>
           <td class="text-center">
+            <a class="btn bg-rose-500 text-white text-center" href="{% url 'item:buy' item.id %}">Order Now</a>
             <a class="btn bg-sky-500 text-center text-white" href="{% url 'item:detail' item.id %}">View Detail</a>
             <button data-item-id="{{ stt }}" class="delete-item btn btn-danger text-center text-white">Delete</button>
           </td>
@@ -39,7 +40,7 @@
         <td></td>
         <td style="padding: 15px; border-bottom-color: black;" class="d-block" id="price">{{ total_price }}</td>
         <td class="text-center">
-          <a class="btn bg-rose-500 text-white">Order Now</a>
+          <a href="{% url 'item:items' %}" class="btn bg-rose-500 text-white">Search more item</a>
         </td>
       </tr>
     </tbody>

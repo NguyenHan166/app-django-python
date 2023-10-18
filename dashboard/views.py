@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 
 from item.models import Item,Orders
@@ -31,3 +31,22 @@ def detailOrder(request,pk):
         'order': order,
         'item': item,
     })
+
+@login_required
+def detailMyorder(request , pk):
+    item = Item.objects.get(pk=pk)
+    myorder = Orders.objects.filter(buyer=request.user , item=item)[0]
+    return render(request, 'dashboard/detailmyorder.html',{
+        'myorder': myorder,
+        'item': item
+    })
+
+
+@login_required
+def deleteOrder(request,pk):
+    item = Item.objects.get(pk=pk)
+    order = Orders.objects.filter(buyer=request.user , item=item)
+    print(order)
+    order.delete()
+    return redirect('dashboard:index')
+

@@ -35,7 +35,7 @@
         <div class="grid grid-cols-4 gap-4">
             {% for item in myorders_items %}
                 <div class="">
-                    <a href="{% url 'item:detail' item.id %}">
+                    <a href="{% url 'dashboard:detailMyorder' item.id %}">
                         <div>
                             <img style="width: 100%; height: 250px;" src='{{ item.image.url }}' class="rounded-t-xl">
                         </div>
@@ -45,6 +45,10 @@
                             <p class="text-gray-500">Price: {{ item.price }}</p>
                         </div>
                     </a>
+
+                    <div>
+                        <a class="btn bg-rose-500 hover:bg-rose-600 text-white w-full" href="{% url 'dashboard:deleteOrder' item.id %}">Delete Order</a>
+                    </div>
                 </div>
             {%endfor%}
         </div>
