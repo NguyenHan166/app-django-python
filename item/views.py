@@ -22,15 +22,21 @@ def items(request):
     if from_price == '':
         from_price = 0
     if to_price == '':
-        to_price = 100000000000
+        to_price = 1000000
+    
+    from_price = float(from_price)
+    to_price = float(to_price)
 
-    if category_id != 0:
-        items = items.filter(category_id=category_id)
+    # debug
+    print(category_id ,type(category_id), from_price , to_price , type(from_price))
+
+    if int(category_id) != 0:
         items = items.filter(price__gte=from_price , price__lte=to_price , category_id=category_id)
     else:
         items = items.filter(price__gte=from_price , price__lte=to_price)
+    print(items)
 
-    if query:
+    if query != '':
         items = items.filter(Q(name__icontains=query) | Q(description__icontains=query))
     
 
@@ -38,7 +44,6 @@ def items(request):
         items = sorted(items , key=lambda item: item.price)
     else:
         items = sorted(items, key=lambda item: item.price , reverse=True)
-    
     
 
     return render(request, 'item/items.html', {
