@@ -23,3 +23,4 @@
 - Feedback: Người mua có thể để lại feed back sau khi đã mua và nhận được sản phẩm cũng như xem được các feedback người mua khác đăng tải
 
 -Có các models chính : User , Item , Category , Cart , Conversation , Order
+

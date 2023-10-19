@@ -73,7 +73,7 @@
                             {% if item.created_by != request.user %}
                             {% csrf_token %}
                                 <div class="flex rounded-b-xl">
-                                  <a href="{% url 'item:buy' item.id %}" class ="btn text-center text-xl text-white bg-rose-500 w-1/2 p-2 hover:bg-rose-600 add-to-cart">Buy</a>
+                                  <a href="{% url 'item:buy' item.id %}" class ="btn text-center text-xl text-white bg-rose-500 w-1/2 p-2 hover:bg-rose-600">Buy</a>
                                   <button data-item-id="{{ item.id }}" class="btn text-center text-xl text-white bg-sky-500 p-2 w-1/2 hover:bg-sky-600 add-to-cart"><i class="fa-solid fa-cart-plus"></i> Add To Cart</button>
                                 </div>
                                 <div id="snackbar" class="bg-sky-500">Add to cart successfully!</div>
