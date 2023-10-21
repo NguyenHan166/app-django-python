@@ -11,10 +11,6 @@ def index(request):
     items = Item.objects.filter(is_sold=False)
     items = sorted(items , key= lambda x: x.created_at , reverse=True)
     categories = Category.objects.all()
-    cart = Cart.objects.all()
-    if not cart.exists() and request.user.is_authenticated:
-        cart = Cart.objects.create(user = request.user)
-        cart.save()
     session_value = request.session.pop('messageBuy', None)  # Lấy giá trị của session và xóa nó
     return render(request, 'core/index.html',{
         'categories' : categories,

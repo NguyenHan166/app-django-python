@@ -94,6 +94,10 @@ def delete(request , pk):
 
 @login_required
 def cart(request):
+    cart = Cart.objects.filter(user = request.user)
+    if not cart.exists() and request.user.is_authenticated:
+        cart = Cart.objects.create(user = request.user)
+        cart.save()
     cart = Cart.objects.filter(user = request.user)[0]
     items = cart.items.all()
     total_price = sum([x.price for x in items])

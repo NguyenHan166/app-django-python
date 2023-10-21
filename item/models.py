@@ -32,6 +32,11 @@ class Item(models.Model):
 class Cart(models.Model):
     items = models.ManyToManyField(Item)
     user = models.ForeignKey(User , related_name='cart' , blank=True, on_delete=models.CASCADE)
+    
+    class Meta:
+        ordering = ('user',)
+    def __str__(self):
+        return 'Cart of ' + self.user.username
 
 class Orders(models.Model):
     item = models.ForeignKey(Item , related_name='items', on_delete=models.CASCADE)
