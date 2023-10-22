@@ -22,7 +22,7 @@ def items(request):
     if from_price == '':
         from_price = 0
     if to_price == '':
-        to_price = 1000000
+        to_price = 1000000000
     
     from_price = float(from_price)
     to_price = float(to_price)
