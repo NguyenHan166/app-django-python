@@ -26,9 +26,9 @@ def index(request):
 @login_required
 def detailOrder(request,pk):
     item = Item.objects.get(pk=pk)
-    order = Orders.objects.filter(seller=request.user , item=item)[0]
+    orders = Orders.objects.filter(seller=request.user , item=item)
     return render(request, 'dashboard/detailorder.html',{
-        'order': order,
+        'orders': orders,
         'item': item,
     })
 
